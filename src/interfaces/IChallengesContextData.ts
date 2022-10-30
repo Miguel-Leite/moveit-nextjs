@@ -5,8 +5,9 @@ export interface IChallengesContextData {
   currentExperience: number;
   experienceToNextLevel: number;
   challengesCompleted: number;
-  activeCHallenge: IChallenge | null;
+  activeChallenge: IChallenge | null;
   levelUp: ()=> void;
   startNewChallenge: ()=> void;
   resetChallenge: () => void;
+  completeChallenge: () => void;
 }
