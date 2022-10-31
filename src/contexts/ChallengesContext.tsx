@@ -7,6 +7,7 @@ import { IChallenge } from "../interfaces/IChallenge";
 import { IChallengesContextData } from "../interfaces/IChallengesContextData";
 import { IProviderProps } from "../interfaces/IProviderProps";
 import { IChallengesProviderProps } from "../interfaces/IChallengesProviderProps";
+import { LevelUpModal } from "../components/LevelUpModal";
 
 export const ChallengesContext = createContext({} as IChallengesContextData);
 
@@ -16,7 +17,8 @@ export function ChallengesProvider ({ children, ...rest }: IChallengesProviderPr
   const [currentExperience, setCurrentExperience] = useState(0);
   const [challengesCompleted, setChallengesCompleted] = useState(0);
 
-  const [activeChallenge, setActiveChallenge] = useState(null)
+  const [activeChallenge, setActiveChallenge] = useState(null);
+  const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
 
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
 
@@ -35,6 +37,11 @@ export function ChallengesProvider ({ children, ...rest }: IChallengesProviderPr
   
   function levelUp () {
     setLevel(level + 1)
+    setIsLevelUpModalOpen(true)
+  }
+
+  function closeLevelUpModal() {
+    setIsLevelUpModalOpen(false);
   }
 
   function startNewChallenge () {
@@ -86,8 +93,11 @@ export function ChallengesProvider ({ children, ...rest }: IChallengesProviderPr
       resetChallenge,
       experienceToNextLevel,
       completeChallenge,
+      closeLevelUpModal,
       }}>
       {children}
+
+      { isLevelUpModalOpen && <LevelUpModal />}
     </ChallengesContext.Provider>
   )
 }
